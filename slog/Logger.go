@@ -7,8 +7,6 @@ import (
 	"sync"
 )
 
-
-
 // --- Global Log Level Configuration ---
 
 // This mutex ensures thread-safe access to the global LOG_LEVEL
@@ -58,6 +56,8 @@ func NewLogger(component string, output *os.File) *Logger {
 func (l *Logger) logf(level LogLevel, msg string, params ...interface{}) {
 	// Check if the message's level is higher than the currently configured global minimum level.
 	if level > GetGlobalMinLevel() {
+		msg = ""
+		params = nil
 		return // Do not log if the level is too low
 	}
 
